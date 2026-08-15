@@ -56,6 +56,28 @@ vitest.config.ts      test runner config
 start on an ephemeral port and shut down, which is awkward if the module calls
 `listen()` as a side effect of being imported.
 
+## CI
+
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on every push, on
+pull requests into `main`, and on demand from the Actions tab. It installs with
+`npm ci`, then runs typecheck → tests (with coverage) → build, and uploads the
+coverage report as a build artifact.
+
+Two things this depends on:
+
+- **`package-lock.json` must be committed.** `npm ci` fails outright without it,
+  and fails if it has drifted from `package.json`. Commit the lockfile whenever
+  you change dependencies.
+- **`.node-version` picks the CI Node version**, via `node-version-file`. Bump
+  that file and CI follows automatically.
+
+Build runs as its own step on purpose: `tsconfig.build.json` excludes `tests/`
+and therefore resolves types differently, so it can fail when `typecheck` passes.
+That exact failure already happened once during setup.
+
+To make these checks blocking, go to **Settings → Branches → Add branch
+ruleset** on `main` and require the `Typecheck, test, build` status check.
+
 ## Things worth knowing
 
 **This is an ESM project** (`"type": "module"` in `package.json`). Two consequences:
