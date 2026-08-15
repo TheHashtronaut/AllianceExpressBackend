@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    /* Language and output target */
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /* Strictness — all of these are worth keeping on from day one */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* Ambient types. Declared explicitly rather than relying on automatic
+       @types discovery, which does not pick up @types/node here and would
+       otherwise leave src/ without `process`, `console` or `node:*`. */
+    "types": ["node"],
+
+    /* Interop and module hygiene */
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Emit (overridden by tsconfig.build.json for real builds) */
+    "noEmit": true,
+    "sourceMap": true,
+    "declaration": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "vitest.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}
